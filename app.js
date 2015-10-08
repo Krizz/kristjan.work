@@ -8,7 +8,7 @@ var config = require('./config');
 
 app.get('/', function(req, res) {
   db.find({})
-  .sort({ date: 1})
+  .sort({ date: -1})
   .limit(1).exec(function (err, docs) {
     var status = 'nothing here';
     if (docs.length) {
