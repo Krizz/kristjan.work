@@ -5,12 +5,21 @@ app.set('view engine', 'jade');
 app.set('views', __dirname);
 
 var config = require('./config');
-var status = 'doing nothing';
 
 app.get('/', function(req, res) {
-  res.render('./index', {
-    status: status
+  db.find({})
+  .sort({ date: 1})
+  .limit(1).exec(function (err, docs) {
+    var status = 'nothing here';
+    if (docs.length) {
+      status = docs[0].status;
+    }
+
+    res.render('./index', {
+      status: status
+    });
   });
+
 });
 
 var Datastore = require('nedb');
@@ -27,7 +36,6 @@ app.get('/status/:key?/:status?', function(req, res) {
 
   if (key) {
     if (key === config.key) {
-      status = req.params.status;
       data.ok = 1;
 
       db.insert({
@@ -39,13 +47,21 @@ app.get('/status/:key?/:status?', function(req, res) {
       data.ok = 0;
       data.err = 'Auth Fail!';
     }
+
+    res.json(data);
   } else {
     data.ok = 1;
-    data.status = status;
+
+    db.find({})
+    .sort({ date: 1})
+    .limit(1).exec(function (err, docs) {
+      data.status = 'nothing here';
+      if (docs.length) {
+        data.status = docs[0].status;
+      }
+      res.json(data);
+    });
   }
-
-
-  res.json(data);
 });
 
 app.listen(3000);
