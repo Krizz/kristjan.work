@@ -36,6 +36,7 @@ app.get('/status/:key?/:status?', function(req, res) {
 
   if (key) {
     if (key === config.key) {
+      var status = req.params.status;
       data.ok = 1;
 
       db.insert({
