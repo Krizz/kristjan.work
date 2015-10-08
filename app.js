@@ -54,7 +54,7 @@ app.get('/status/:key?/:status?', function(req, res) {
     data.ok = 1;
 
     db.find({})
-    .sort({ date: 1})
+    .sort({ date: -1})
     .limit(1).exec(function (err, docs) {
       data.status = 'nothing here';
       if (docs.length) {
