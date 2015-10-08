@@ -13,6 +13,10 @@ app.get('/', function(req, res) {
   });
 });
 
+var Datastore = require('nedb');
+var db = new Datastore({ filename: __dirname + '/database', autoload: true });
+
+
 //set status
 app.get('/status/:key?/:status?', function(req, res) {
   var data = {
@@ -25,6 +29,12 @@ app.get('/status/:key?/:status?', function(req, res) {
     if (key === config.key) {
       status = req.params.status;
       data.ok = 1;
+
+      db.insert({
+        status: status,
+        date: new Date()
+      });
+
     } else {
       data.ok = 0;
       data.err = 'Auth Fail!';
