@@ -49,7 +49,6 @@ head
           var data = JSON.parse(request.responseText);
           var el = document.getElementById('status-text');
           el.textContent = data.status;
-          el.i
         } else {
 
         }
@@ -62,7 +61,7 @@ head
       request.send();
     }
 
-    setInterval(checkStatus, 5000);
+    setInterval(checkStatus, 7000);
 
 
     setInterval(function() {

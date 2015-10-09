@@ -6,10 +6,20 @@ app.set('views', __dirname);
 
 var config = require('./config');
 
-var lng = {
-  no: ['não', 'Нет', 'nein', 'Ei', 'Non'],
-  yes: ['Да','Sí','Oui','Jah', 'Ya']
-};
+
+
+var getPhrase = function(text) {
+  var lng = {
+    no: ['não', 'Нет', 'nein', 'Ei', 'Non'],
+    yes: ['Да','Sí','Oui','Jah', 'Ya']
+  };
+  phrase = text;
+  if (text === 'no' || text === 'yes') {
+    phrase = lng[text][Math.floor(Math.random()*lng[text].length)];
+  }
+
+  return phrase;
+}
 
 app.get('/', function(req, res) {
   db.find({})
@@ -20,11 +30,8 @@ app.get('/', function(req, res) {
       status = docs[0].status;
     }
 
-    //temporary hack
-    if (status === 'no' || status === 'yes') {
-      var phrase = lng[status][Math.floor(Math.random()*lng[status].length)];
-      status = phrase;
-    }
+    var status = getPhrase(status);
+
 
     res.render('./index', {
       status: status
@@ -70,6 +77,8 @@ app.get('/status/:key?/:status?', function(req, res) {
       data.status = 'nothing here';
       if (docs.length) {
         data.status = docs[0].status;
+        data.status = getPhrase(data.status);
+
       }
       res.json(data);
     });
