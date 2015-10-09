@@ -39,6 +39,32 @@ head
     var sleeping = true;
     var cap = "round";
     var strokeStyle = '#555555';
+
+    var checkStatus = function() {
+      var request = new XMLHttpRequest();
+      request.open('GET', '/status', true);
+
+      request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+          var data = JSON.parse(request.responseText);
+          var el = document.getElementById('status-text');
+          el.textContent = data.status;
+          el.i
+        } else {
+
+        }
+      };
+
+      request.onerror = function() {
+        // There was a connection error of some sort
+      };
+
+      request.send();
+    }
+
+    setInterval(checkStatus, 5000);
+
+
     setInterval(function() {
       blink = true;
     }, 5000);
@@ -249,5 +275,5 @@ head
       }
   body(onload='init()')
     .center
-      h2= status
+      h2(id="status-text")= status
       canvas#canvas(width='239', height='240')
