@@ -4,11 +4,13 @@ head
   meta(charset="UTF-8")
   title What is happening ?
   link(href="https://fonts.googleapis.com/css?family=Oswald:700")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
   style.
     html, body {
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      margin: 0;
     }
     body {
     font-family: 'Oswald', sans-serif;
@@ -23,8 +25,9 @@ head
     }
     h2 {
       margin: 0;
-      line-height: 180%;
+      line-height: 100%;
       text-align: center;
+      color: #fa9e00;
       text-transform: uppercase;
     }
     canvas {
@@ -34,18 +37,16 @@ head
   script.
     var blink = false;
     var sleeping = true;
-    var strokeStyle = '#A49E7E';
+    var cap = "round";
+    var strokeStyle = '#555555';
     setInterval(function() {
       blink = true;
     }, 5000);
       function init() {
-
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext("2d");
-
-
         setInterval(function() {
-              draw(ctx);
+          draw(ctx);
         }, 200);
       }
 
@@ -58,8 +59,8 @@ head
         ctx.bezierCurveTo(49.3, 25.5, -22.2, 64.0, 14.4, 147.5);
         ctx.lineWidth = 8.0;
         ctx.strokeStyle = strokeStyle;
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
+        ctx.lineCap = cap;
+        ctx.lineJoin = cap;
         ctx.stroke();
 
         // layer2/Path
@@ -209,8 +210,8 @@ head
         ctx.lineTo(72.1, 198.8);
         ctx.lineWidth = 9.0;
         ctx.strokeStyle = strokeStyle;
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
+        ctx.lineCap = cap;
+        ctx.lineJoin = cap;
         ctx.stroke();
         ctx.restore();
 
@@ -228,8 +229,8 @@ head
              ctx.closePath();
              ctx.lineWidth = 8.0;
              ctx.strokeStyle = strokeStyle;
-             ctx.lineCap = "round";
-             ctx.lineJoin = "round";
+             ctx.lineCap = cap;
+             ctx.lineJoin = cap;
              ctx.stroke();
 
              // bLINK/Path
@@ -248,5 +249,5 @@ head
       }
   body(onload='init()')
     .center
-      canvas#canvas(width='239', height='240')
       h2= status
+      canvas#canvas(width='239', height='240')
