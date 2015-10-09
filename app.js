@@ -6,6 +6,11 @@ app.set('views', __dirname);
 
 var config = require('./config');
 
+var lng = {
+  no: ['não', 'Нет', 'nein', 'Ei', 'Non'],
+  yes: ['Да','Sí','Oui','Jah', 'Ya']
+};
+
 app.get('/', function(req, res) {
   db.find({})
   .sort({ date: -1})
@@ -13,6 +18,12 @@ app.get('/', function(req, res) {
     var status = 'nothing here';
     if (docs.length) {
       status = docs[0].status;
+    }
+
+    //temporary hack
+    if (status === 'no' || status === 'yes') {
+      var phrase = lng[status][Math.floor(Math.random()*lng[status].length)];
+      status = phrase;
     }
 
     res.render('./index', {
