@@ -1,12 +1,35 @@
 var express = require('express');
 var app = express();
 
+
 app.set('view engine', 'jade');
 app.set('views', __dirname);
 app.use(express.static('public'));
 
 var config = require('./config');
 
+var TogglClient = require('toggl-api');
+var toggl = new TogglClient({apiToken: config.toggl_apy_key});
+
+var today = new Date();
+var startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7).toISOString();
+var endDate =  (new Date()).toISOString();
+
+var togglHours = 0;
+var getTogglStats = function() {
+  toggl.getTimeEntries(startDate, endDate, function(err, timeEntries) {
+    var totalDuration = 0;
+    timeEntries.forEach(function(entry) {
+      totalDuration += entry.duration;
+    });
+
+    var totalDurationInHours = totalDuration  / 60 / 60;
+    togglHours = totalDurationInHours;
+  });
+}
+
+getTogglStats();
+setInterval(getTogglStats, 10000);
 
 
 var getPhrase = function(text) {
@@ -37,6 +60,7 @@ app.get('/', function(req, res) {
     res.render('./index', {
       status: status,
       statusText: statusText,
+      duration: togglHours
     });
   });
 

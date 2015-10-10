@@ -13,6 +13,27 @@ head
       margin: 0;
     }
 
+    .stats {
+      color: #f3030c;
+    
+      font-size: 1rem;
+      vertical-align: middle;
+      justify-content: center;
+      margin-top: 10%;
+      align-items: center;
+      display: flex;
+    }
+
+    .stats small {
+      margin-left: 0.4rem;
+    }
+
+    .stats span {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      margin-left: 2%;
+    }
+
     video { 
       opacity: 0.2;
       position: fixed;
@@ -301,3 +322,7 @@ head
     .center
       h2(id="status-text")= statusText
       canvas#canvas(width='239', height='240')
+      .stats
+        img(src="toggl.png", alt="")
+        small= duration
+        span hrs
