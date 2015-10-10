@@ -237,16 +237,32 @@ setInterval(function() {
   }
 
   $('.center').on('click', function() {
-    $('body').addClass('full-monkey');
+
     var audio = $('audio').get(0);
     var video = $('video').get(0);
+
+    var elem = $('body').get(0);;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    }
+    
+    $('body').addClass('full-monkey');
 
     audio.currentTime = 70.5
     video.currentTime = 20
     video.playbackRate = 1
+
     setInterval(function() {
-      if (video.currentTime > 21 && audio.currentTime < 75) {
+      if (video.currentTime > 21 && audio.currentTime < 75 || video.currentTime > 70) {
         video.currentTime = 20;
+
+
       }
     }, 500)
 
