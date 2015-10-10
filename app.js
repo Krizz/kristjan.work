@@ -31,11 +31,12 @@ app.get('/', function(req, res) {
       status = docs[0].status;
     }
 
-    var status = getPhrase(status);
+    var statusText = getPhrase(status);
 
 
     res.render('./index', {
-      status: status
+      status: status,
+      statusText: statusText,
     });
   });
 

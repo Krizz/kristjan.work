@@ -291,7 +291,13 @@ head
       }
   body(onload='init()')
     .video
-      video(autoplay loop src="348692157.mp4")
+      - if(status == 'no') {
+        video(autoplay loop src="shutterstock_v4243079.mp4")
+      - }
+
+      - if(status == 'yes') {
+        video(autoplay loop src="shutterstock_v4243079.mp4")
+      - }
     .center
-      h2(id="status-text")= status
+      h2(id="status-text")= statusText
       canvas#canvas(width='239', height='240')
