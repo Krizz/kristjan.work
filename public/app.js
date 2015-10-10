@@ -24,7 +24,7 @@ var checkStatus = function() {
   request.send();
 }
 
-setInterval(checkStatus, 13000);
+setInterval(checkStatus, 1500);
 
 
 setInterval(function() {
@@ -251,7 +251,7 @@ setInterval(function() {
     } else if (elem.webkitRequestFullscreen) {
       elem.webkitRequestFullscreen();
     }
-    
+
     $('body').addClass('full-monkey');
 
     audio.currentTime = 70.5
