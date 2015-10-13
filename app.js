@@ -1,13 +1,35 @@
+var config = require('./config');
 var express = require('express');
 var app = express();
 var moment = require('moment');
+
+var options = {
+  access_token:  config.up_access_token,
+  client_secret: config.up_client_secret
+};
+
+var isSleeping = false;
+var up = require('jawbone-up')(options);
+var updateUp = function() {
+  up.events.band.get({}, function(err, json) {
+    var data = JSON.parse(json);
+
+    if (data.data.items[0].action === 'enter_sleep_mode') {
+      isSleeping = true;
+    } else {
+      isSleeping = false;
+    }
+  });
+}
+
+setInterval(updateUp, 10000);
+updateUp();
 
 
 app.set('view engine', 'jade');
 app.set('views', __dirname);
 app.use(express.static('public'));
 
-var config = require('./config');
 
 var TogglClient = require('toggl-api');
 var toggl = new TogglClient({apiToken: config.toggl_apy_key});
@@ -66,7 +88,8 @@ app.get('/', function(req, res) {
     res.render('./index', {
       status: status,
       statusText: statusText,
-      duration: togglHours
+      duration: togglHours,
+      isSleeping: isSleeping
     });
   });
 
@@ -79,7 +102,8 @@ var db = new Datastore({ filename: __dirname + '/database', autoload: true });
 //set status
 app.get('/status/:key?/:status?', function(req, res) {
   var data = {
-    ok: 0
+    ok: 0,
+    isSleeping: isSleeping
   };
 
   var key = req.params.key;
