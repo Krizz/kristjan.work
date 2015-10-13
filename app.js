@@ -22,7 +22,7 @@ var updateUp = function() {
   });
 }
 
-setInterval(updateUp, 10000);
+setInterval(updateUp, 5000);
 updateUp();
 
 
