@@ -35,7 +35,7 @@ setInterval(getTogglStats, 10000);
 
 var getPhrase = function(text) {
   var lng = {
-    no: ["Nee", "Non", "Ne", "Nau", "Wala","Na", "Ne", "Ne", "Nej", "Nee", "Ne", "Ei","Nei", "Ei", "Non", "Nee", "No", "Non", "არა", "Nein", "Όχι", "Non", "Nem", "Nei", "No", "Nē", "Ne" ],
+    no: ["Nee", "Non", "Ne", "Nau", "Na", "Ne", "Ne", "Nej", "Nee", "Ne", "Ei","Nei", "Ei", "Non", "Nee", "No", "Non", "არა", "Nein", "Όχι", "Non", "Nem", "Nei", "No", "Nē", "Ne" ],
     yes: ["Ja", "Po", "Po", "Sí", "Ehe", "Da", "Ya", "Sin", "Sí", "Oo", "Ya", "Da", "Ja", "Ja", "Jes", "Jah",  "Ja", "Oui", "Ja", "Sì", "Si"]
   };
   phrase = text;
