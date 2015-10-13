@@ -35,8 +35,8 @@ setInterval(getTogglStats, 10000);
 
 var getPhrase = function(text) {
   var lng = {
-    no: ["Хьау", "Nee", "Jo", "Jo", "Indi", "لأ", "لا", "Non", "Nama", "ना", "Ne", "Nann", "Не", "Nau", "No", "Wala", "ʔį́lé", "Na", "Ne", "Ne", "Nej", "Nee", "Ne", "Ei", "Aao", "Nei", "Ei", "", "Non", "Nee", "No", "Non", "არა", "Nein", "Όχι", "Non", "A'a", "ʻAʻole", "לא", "Tsis Tsis yog (it isn't)", "Nem", "Nei", "No", "No", "いいえ (īe)", "Hî-î.", "Tiaki", "Na", "Nē", "Ne", "na go'i", "Не (Ne)", "Tsia", "Tidak Tak (inf)", "Le", "होइन", "Aowa", "Nei", "Nie", "Não", "Nu", "Нет", "नैव किल (naiva kila)  न", "Naw", "Не (Ne)", "No", "Nie", "Ne", "No", "Lae", "Nogat", "Nej", "Hayır", "Ні", "Yo'q", "Hayi", "Bẹẹ kọ  Ó ti  Ra ra", "Cha"],
-    yes: ["Ары", "Ja", "Po", "Po", "Huo", "أيوه نعم", "أه", "Sí", "Ehe", "हाँ", "Da", "Ya", "Да (Da)", "Sin", "Sí", "Oo", "ʔę́n", "Ya", "Da", "Ano", "Ja", "Ja", "Jes", "Jah", "Aa Eee", "Ja", "Kyllä", "Joat", "Oui", "Ja", "Sì", "Si", "დიახ - კი (k’i) ჰო (ho) - inf ხო (kho) - inf", "Ja", "Ναι (Nai)", "Wi", "Eh", "ʻAe", "(ken) כן", "Yog (it is)", "Igen", "Já", "Si", "Sì", "はい (hai) = that is correct, affirmative", "Î.", "E eng", "Balê Erê", "Jā", "Taip", "go'i", "Да (Da)", "Eny", "Ya", "Iva", "हो", "Ee", "Ja", "Tak", "Sim", "Da", "Да", "भवतु (bhavatu) आम् अस्तु", "Ay", "Да", "Se", "Áno", "Da", "Sí", "Sin", "Yesa", "Ja", "Evet", "Так", "Ha", "Ewe", "Bẹẹ ni", "Yebo"]
+    no: ["Nee", "Non", "Ne", "Nau", "Wala","Na", "Ne", "Ne", "Nej", "Nee", "Ne", "Ei","Nei", "Ei", "Non", "Nee", "No", "Non", "არა", "Nein", "Όχι", "Non", "Nem", "Nei", "No", "Nē", "Ne" ],
+    yes: ["Ja", "Po", "Po", "Sí", "Ehe", "Da", "Ya", "Sin", "Sí", "Oo", "Ya", "Da", "Ja", "Ja", "Jes", "Jah",  "Ja", "Oui", "Ja", "Sì", "Si"]
   };
   phrase = text;
   if (text === 'no' || text === 'yes') {
