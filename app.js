@@ -47,7 +47,7 @@ var getTogglStats = function() {
     });
 
     var totalDurationInHours = totalDuration  / 60 / 60;
-    togglHours = totalDurationInHours;
+    togglHours = totalDurationInHours.toFixed(2);
   });
 }
 
