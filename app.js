@@ -111,8 +111,6 @@ app.get('/status/:key?/:status?', function(req, res) {
 
           if (isInTimeLimit) {
             var currentTime = moment().format('HH:mm');
-            console.log('SENDING MESSAGE');
-            console.log(`${config.user.name}@work ${currentTime}`);
 
             twilioClient.messages.create({
                 to: config.twilio.to,
