@@ -19,7 +19,9 @@
   "dependencies": {
     "express": "^4.13.3",
     "jade": "^1.11.0",
+    "moment-timezone": "^0.4.1",
     "nedb": "^1.2.1",
-    "toggl-api": "0.0.3"
+    "toggl-api": "0.0.3",
+    "twilio": "^2.5.2"
   }
 }
