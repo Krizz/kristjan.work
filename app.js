@@ -1,19 +1,43 @@
+var config = require('./config');
 var express = require('express');
 var app = express();
 var moment = require('moment-timezone');
 moment.tz.setDefault("Europe/Tallinn");
+
+var options = {
+  access_token:  config.up_access_token,
+  client_secret: config.up_client_secret
+};
+
+var isSleeping = false;
+var up = require('jawbone-up')(options);
+var updateUp = function() {
+  up.events.band.get({}, function(err, json) {
+    var data = JSON.parse(json);
+
+    if (data.data.items[0].action === 'enter_sleep_mode') {
+      isSleeping = true;
+    } else {
+      isSleeping = false;
+    }
+  });
+}
+
+setInterval(updateUp, 5000);
+updateUp();
+
+
 app.set('view engine', 'jade');
 app.set('views', __dirname);
 app.use(express.static('public'));
 
-var config = require('./config');
 
 var TogglClient = require('toggl-api');
 var toggl = new TogglClient({apiToken: config.toggl_apy_key});
 
 var today = new Date();
-var startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7).toISOString();
-var endDate =  (new Date()).toISOString();
+var startDate = moment().startOf('isoweek').toISOString();
+var endDate =  moment().toISOString();
 
 
 var twilio = require('twilio');
@@ -28,7 +52,7 @@ var getTogglStats = function() {
     });
 
     var totalDurationInHours = totalDuration  / 60 / 60;
-    togglHours = totalDurationInHours;
+    togglHours = totalDurationInHours.toFixed(2);
   });
 };
 
@@ -38,12 +62,17 @@ setInterval(getTogglStats, 10000);
 
 var getPhrase = function(text) {
   var lng = {
-    no: ['não', 'Нет', 'nein', 'Ei', 'Non'],
-    yes: ['Да','Sí','Oui','Jah', 'Ya']
+    no: ["Nee", "Non", "Ne", "Nau", "Na", "Ne", "Ne", "Nej", "Nee", "Ne", "Ei","Nei", "Ei", "Non", "Nee", "No", "Non", "არა", "Nein", "Όχι", "Non", "Nem", "Nei", "No", "Nē", "Ne" ],
+    yes: ["Ja", "Po", "Po", "Sí", "Ehe", "Da", "Ya", "Sin", "Sí", "Oo", "Ya", "Da", "Ja", "Ja", "Jes", "Jah",  "Ja", "Oui", "Ja", "Sì", "Si"]
   };
   phrase = text;
   if (text === 'no' || text === 'yes') {
-    phrase = lng[text][Math.floor(Math.random()*lng[text].length)];
+    while(true) {
+      phrase = lng[text][Math.floor(Math.random()*lng[text].length)];
+      if (phrase.length < 5 && !phrase.match(/\(|\)/) && !phrase.length <= 1) {
+        break;
+      }
+    }
   }
 
   return phrase;
@@ -64,7 +93,8 @@ app.get('/', function(req, res) {
     res.render('./index', {
       status: status,
       statusText: statusText,
-      duration: togglHours
+      duration: togglHours,
+      isSleeping: isSleeping
     });
   });
 
@@ -76,7 +106,8 @@ var db = new Datastore({ filename: __dirname + '/database', autoload: true });
 //set status
 app.get('/status/:key?/:status?', function(req, res) {
   var data = {
-    ok: 0
+    ok: 0,
+    isSleeping: isSleeping
   };
 
   var key = req.params.key;

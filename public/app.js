@@ -12,6 +12,14 @@ var checkStatus = function() {
       var data = JSON.parse(request.responseText);
       var el = document.getElementById('status-text');
       el.textContent = data.status;
+
+      if (data.isSleeping) {
+        sleep = true;
+        $('body').addClass('sleeping');
+      } else {
+        sleep = false;
+        $('body').removeClass('sleeping');
+      }
     } else {
 
     }
@@ -26,6 +34,7 @@ var checkStatus = function() {
 
 setInterval(checkStatus, 1500);
 
+var sleep = false;
 
 setInterval(function() {
   blink = true;
@@ -203,7 +212,7 @@ setInterval(function() {
     ctx.stroke();
     ctx.restore();
 
-    if (blink) {
+    if (blink || sleep) {
           blink = false;
          // bLINK/Path
          ctx.save();
@@ -235,6 +244,27 @@ setInterval(function() {
     }
 
   }
+
+  var z = 1;
+  setInterval(function() {
+    $el = $('#z-' + z);
+    console.log($el);
+    $el
+    .css({
+      opacity: 0.8
+    })
+    .addClass('active')
+    .siblings()
+    .css({
+      opacity: 0
+    })
+    .removeClass('active');
+
+    if (z > 3) {
+      z = 0;
+    }
+    z++;
+  }, 600);
 
   $('.center').on('click', function() {
 
